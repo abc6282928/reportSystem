@@ -19,7 +19,7 @@ public class PageController {
      */
     @RequestMapping("/index")
     public String index() {
-        return "jsp/index";
+        return "index";
     }
 
     /**

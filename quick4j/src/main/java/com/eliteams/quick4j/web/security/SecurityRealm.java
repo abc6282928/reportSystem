@@ -38,6 +38,7 @@ public class SecurityRealm extends AuthorizingRealm {
 
     /**
      * 权限检查
+     * 是授权访问控制，用于对用户进行的操作进行人证授权，证明该用户是否允许进行当前操作，如访问某个链接，某个资源文件等
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -62,7 +63,7 @@ public class SecurityRealm extends AuthorizingRealm {
     }
 
     /**
-     * 登录验证
+     * 登录验证，验证用户身份的过程
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {

@@ -24,7 +24,7 @@ import com.eliteams.quick4j.web.service.UserService;
 /**
  * 用户控制器
  * 
- * @author StarZou
+ * @author zhangsh
  * @since 2014年5月28日 下午3:54:00
  **/
 @Controller
@@ -99,5 +99,16 @@ public class UserController {
     @RequiresPermissions(value = PermissionSign.USER_CREATE)
     public String create() {
         return "拥有user:create权限,能访问";
+    }
+    
+    /**
+     * 用户列表查看
+     * 
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public String list() {
+        return "gernal/user/list";
     }
 }
