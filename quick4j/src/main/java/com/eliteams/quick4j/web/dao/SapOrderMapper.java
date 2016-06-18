@@ -1,11 +1,14 @@
 package com.eliteams.quick4j.web.dao;
 
-import com.eliteams.quick4j.web.model.SapOrder;
-import com.eliteams.quick4j.web.model.SapOrderExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-public interface SapOrderMapper {
+import com.eliteams.quick4j.core.generic.GenericDao;
+import com.eliteams.quick4j.web.model.SapOrder;
+import com.eliteams.quick4j.web.model.SapOrderExample;
+
+public interface SapOrderMapper extends GenericDao<SapOrder, Long> {
     int countByExample(SapOrderExample example);
 
     int deleteByExample(SapOrderExample example);

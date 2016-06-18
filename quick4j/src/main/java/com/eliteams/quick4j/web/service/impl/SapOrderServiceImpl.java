@@ -2,17 +2,20 @@ package com.eliteams.quick4j.web.service.impl;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
 import com.eliteams.quick4j.web.dao.SapOrderMapper;
 import com.eliteams.quick4j.web.model.SapOrder;
 import com.eliteams.quick4j.web.service.SapOrderService;
 
+@Service
 public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> implements SapOrderService {
 
 	@Resource
     private SapOrderMapper sapOrderMapper;
-	
+
 	@Override
 	public SapOrder gerProductOrderInfo() {
 		// TODO Auto-generated method stub
@@ -21,21 +24,9 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 
 	@Override
 	public GenericDao<SapOrder, Long> getDao() {
-		return null;
+		// TODO Auto-generated method stub
+		return sapOrderMapper;
 	}
-
-	@Override
-    public int insert(SapOrder model) {
-        return sapOrderMapper.insertSelective(model);
-    }
-
-    @Override
-    public int update(SapOrder model) {
-        return sapOrderMapper.updateByPrimaryKeySelective(model);
-    }
-
-    @Override
-    public int delete(Long id) {
-        return sapOrderMapper.deleteByPrimaryKey(id);
-    }
+	
+	
 }
