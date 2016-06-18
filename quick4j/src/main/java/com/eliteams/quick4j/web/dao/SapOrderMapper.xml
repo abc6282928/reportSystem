@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eliteams.quick4j.web.dao.SapOrderMapper">
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.SapOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_order_id" jdbcType="VARCHAR" property="productOrderId" />
+    <result column="product_order_type" jdbcType="VARCHAR" property="productOrderType" />
+    <result column="sale_order_id" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="manufacture_version" jdbcType="VARCHAR" property="manufactureVersion" />
+    <result column="material_id" jdbcType="VARCHAR" property="materialId" />
+    <result column="material_describe" jdbcType="VARCHAR" property="materialDescribe" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+    <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+    <result column="waste_total" jdbcType="INTEGER" property="wasteTotal" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="plan_start_date" jdbcType="DATE" property="planStartDate" />
+    <result column="plan_end_date" jdbcType="DATE" property="planEndDate" />
+    <result column="del_remark" jdbcType="CHAR" property="delRemark" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, product_order_id, product_order_type, sale_order_id, sale_order_row, user_simple_name, 
+    manufacture_version, material_id, material_describe, target_sum, finished_total, 
+    waste_total, unit, plan_start_date, plan_end_date, del_remark, state, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sap_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sap_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample">
+    delete from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order (id, product_order_id, product_order_type, 
+      sale_order_id, sale_order_row, user_simple_name, 
+      manufacture_version, material_id, material_describe, 
+      target_sum, finished_total, waste_total, 
+      unit, plan_start_date, plan_end_date, 
+      del_remark, state, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{productOrderType,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
+      #{manufactureVersion,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER}, 
+      #{unit,jdbcType=VARCHAR}, #{planStartDate,jdbcType=DATE}, #{planEndDate,jdbcType=DATE}, 
+      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productOrderId != null">
+        product_order_id,
+      </if>
+      <if test="productOrderType != null">
+        product_order_type,
+      </if>
+      <if test="saleOrderId != null">
+        sale_order_id,
+      </if>
+      <if test="saleOrderRow != null">
+        sale_order_row,
+      </if>
+      <if test="userSimpleName != null">
+        user_simple_name,
+      </if>
+      <if test="manufactureVersion != null">
+        manufacture_version,
+      </if>
+      <if test="materialId != null">
+        material_id,
+      </if>
+      <if test="materialDescribe != null">
+        material_describe,
+      </if>
+      <if test="targetSum != null">
+        target_sum,
+      </if>
+      <if test="finishedTotal != null">
+        finished_total,
+      </if>
+      <if test="wasteTotal != null">
+        waste_total,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="planStartDate != null">
+        plan_start_date,
+      </if>
+      <if test="planEndDate != null">
+        plan_end_date,
+      </if>
+      <if test="delRemark != null">
+        del_remark,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productOrderId != null">
+        #{productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOrderType != null">
+        #{productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderRow != null">
+        #{saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="userSimpleName != null">
+        #{userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureVersion != null">
+        #{manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null">
+        #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialDescribe != null">
+        #{materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSum != null">
+        #{targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="finishedTotal != null">
+        #{finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="wasteTotal != null">
+        #{wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartDate != null">
+        #{planStartDate,jdbcType=DATE},
+      </if>
+      <if test="planEndDate != null">
+        #{planEndDate,jdbcType=DATE},
+      </if>
+      <if test="delRemark != null">
+        #{delRemark,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample" resultType="java.lang.Integer">
+    select count(*) from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sap_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.productOrderId != null">
+        product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productOrderType != null">
+        product_order_type = #{record.productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderId != null">
+        sale_order_id = #{record.saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderRow != null">
+        sale_order_row = #{record.saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSimpleName != null">
+        user_simple_name = #{record.userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufactureVersion != null">
+        manufacture_version = #{record.manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialId != null">
+        material_id = #{record.materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialDescribe != null">
+        material_describe = #{record.materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targetSum != null">
+        target_sum = #{record.targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="record.finishedTotal != null">
+        finished_total = #{record.finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.wasteTotal != null">
+        waste_total = #{record.wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planStartDate != null">
+        plan_start_date = #{record.planStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.planEndDate != null">
+        plan_end_date = #{record.planEndDate,jdbcType=DATE},
+      </if>
+      <if test="record.delRemark != null">
+        del_remark = #{record.delRemark,jdbcType=CHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sap_order
+    set id = #{record.id,jdbcType=BIGINT},
+      product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
+      product_order_type = #{record.productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{record.saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{record.saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{record.userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{record.manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{record.materialId,jdbcType=VARCHAR},
+      material_describe = #{record.materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{record.targetSum,jdbcType=INTEGER},
+      finished_total = #{record.finishedTotal,jdbcType=INTEGER},
+      waste_total = #{record.wasteTotal,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      plan_start_date = #{record.planStartDate,jdbcType=DATE},
+      plan_end_date = #{record.planEndDate,jdbcType=DATE},
+      del_remark = #{record.delRemark,jdbcType=CHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    update sap_order
+    <set>
+      <if test="productOrderId != null">
+        product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOrderType != null">
+        product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderRow != null">
+        sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="userSimpleName != null">
+        user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureVersion != null">
+        manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null">
+        material_id = #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialDescribe != null">
+        material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSum != null">
+        target_sum = #{targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="finishedTotal != null">
+        finished_total = #{finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="wasteTotal != null">
+        waste_total = #{wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartDate != null">
+        plan_start_date = #{planStartDate,jdbcType=DATE},
+      </if>
+      <if test="planEndDate != null">
+        plan_end_date = #{planEndDate,jdbcType=DATE},
+      </if>
+      <if test="delRemark != null">
+        del_remark = #{delRemark,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    update sap_order
+    set product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{targetSum,jdbcType=INTEGER},
+      finished_total = #{finishedTotal,jdbcType=INTEGER},
+      waste_total = #{wasteTotal,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      plan_start_date = #{planStartDate,jdbcType=DATE},
+      plan_end_date = #{planEndDate,jdbcType=DATE},
+      del_remark = #{delRemark,jdbcType=CHAR},
+      state = #{state,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.SapOrder">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_order_id" jdbcType="VARCHAR" property="productOrderId" />
+    <result column="product_order_type" jdbcType="VARCHAR" property="productOrderType" />
+    <result column="sale_order_id" jdbcType="VARCHAR" property="saleOrderId" />
+    <result column="sale_order_row" jdbcType="VARCHAR" property="saleOrderRow" />
+    <result column="user_simple_name" jdbcType="VARCHAR" property="userSimpleName" />
+    <result column="manufacture_version" jdbcType="VARCHAR" property="manufactureVersion" />
+    <result column="material_id" jdbcType="VARCHAR" property="materialId" />
+    <result column="material_describe" jdbcType="VARCHAR" property="materialDescribe" />
+    <result column="target_sum" jdbcType="INTEGER" property="targetSum" />
+    <result column="finished_total" jdbcType="INTEGER" property="finishedTotal" />
+    <result column="waste_total" jdbcType="INTEGER" property="wasteTotal" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="plan_start_date" jdbcType="DATE" property="planStartDate" />
+    <result column="plan_end_date" jdbcType="DATE" property="planEndDate" />
+    <result column="del_remark" jdbcType="CHAR" property="delRemark" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, product_order_id, product_order_type, sale_order_id, sale_order_row, user_simple_name, 
+    manufacture_version, material_id, material_describe, target_sum, finished_total, 
+    waste_total, unit, plan_start_date, plan_end_date, del_remark, state, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sap_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sap_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample">
+    delete from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order (id, product_order_id, product_order_type, 
+      sale_order_id, sale_order_row, user_simple_name, 
+      manufacture_version, material_id, material_describe, 
+      target_sum, finished_total, waste_total, 
+      unit, plan_start_date, plan_end_date, 
+      del_remark, state, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{productOrderId,jdbcType=VARCHAR}, #{productOrderType,jdbcType=VARCHAR}, 
+      #{saleOrderId,jdbcType=VARCHAR}, #{saleOrderRow,jdbcType=VARCHAR}, #{userSimpleName,jdbcType=VARCHAR}, 
+      #{manufactureVersion,jdbcType=VARCHAR}, #{materialId,jdbcType=VARCHAR}, #{materialDescribe,jdbcType=VARCHAR}, 
+      #{targetSum,jdbcType=INTEGER}, #{finishedTotal,jdbcType=INTEGER}, #{wasteTotal,jdbcType=INTEGER}, 
+      #{unit,jdbcType=VARCHAR}, #{planStartDate,jdbcType=DATE}, #{planEndDate,jdbcType=DATE}, 
+      #{delRemark,jdbcType=CHAR}, #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    insert into sap_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productOrderId != null">
+        product_order_id,
+      </if>
+      <if test="productOrderType != null">
+        product_order_type,
+      </if>
+      <if test="saleOrderId != null">
+        sale_order_id,
+      </if>
+      <if test="saleOrderRow != null">
+        sale_order_row,
+      </if>
+      <if test="userSimpleName != null">
+        user_simple_name,
+      </if>
+      <if test="manufactureVersion != null">
+        manufacture_version,
+      </if>
+      <if test="materialId != null">
+        material_id,
+      </if>
+      <if test="materialDescribe != null">
+        material_describe,
+      </if>
+      <if test="targetSum != null">
+        target_sum,
+      </if>
+      <if test="finishedTotal != null">
+        finished_total,
+      </if>
+      <if test="wasteTotal != null">
+        waste_total,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="planStartDate != null">
+        plan_start_date,
+      </if>
+      <if test="planEndDate != null">
+        plan_end_date,
+      </if>
+      <if test="delRemark != null">
+        del_remark,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productOrderId != null">
+        #{productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOrderType != null">
+        #{productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderRow != null">
+        #{saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="userSimpleName != null">
+        #{userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureVersion != null">
+        #{manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null">
+        #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialDescribe != null">
+        #{materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSum != null">
+        #{targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="finishedTotal != null">
+        #{finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="wasteTotal != null">
+        #{wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartDate != null">
+        #{planStartDate,jdbcType=DATE},
+      </if>
+      <if test="planEndDate != null">
+        #{planEndDate,jdbcType=DATE},
+      </if>
+      <if test="delRemark != null">
+        #{delRemark,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.SapOrderExample" resultType="java.lang.Integer">
+    select count(*) from sap_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sap_order
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.productOrderId != null">
+        product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productOrderType != null">
+        product_order_type = #{record.productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderId != null">
+        sale_order_id = #{record.saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saleOrderRow != null">
+        sale_order_row = #{record.saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userSimpleName != null">
+        user_simple_name = #{record.userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufactureVersion != null">
+        manufacture_version = #{record.manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialId != null">
+        material_id = #{record.materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.materialDescribe != null">
+        material_describe = #{record.materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.targetSum != null">
+        target_sum = #{record.targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="record.finishedTotal != null">
+        finished_total = #{record.finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.wasteTotal != null">
+        waste_total = #{record.wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.planStartDate != null">
+        plan_start_date = #{record.planStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.planEndDate != null">
+        plan_end_date = #{record.planEndDate,jdbcType=DATE},
+      </if>
+      <if test="record.delRemark != null">
+        del_remark = #{record.delRemark,jdbcType=CHAR},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sap_order
+    set id = #{record.id,jdbcType=BIGINT},
+      product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
+      product_order_type = #{record.productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{record.saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{record.saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{record.userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{record.manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{record.materialId,jdbcType=VARCHAR},
+      material_describe = #{record.materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{record.targetSum,jdbcType=INTEGER},
+      finished_total = #{record.finishedTotal,jdbcType=INTEGER},
+      waste_total = #{record.wasteTotal,jdbcType=INTEGER},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      plan_start_date = #{record.planStartDate,jdbcType=DATE},
+      plan_end_date = #{record.planEndDate,jdbcType=DATE},
+      del_remark = #{record.delRemark,jdbcType=CHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    update sap_order
+    <set>
+      <if test="productOrderId != null">
+        product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="productOrderType != null">
+        product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderId != null">
+        sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrderRow != null">
+        sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      </if>
+      <if test="userSimpleName != null">
+        user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="manufactureVersion != null">
+        manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="materialId != null">
+        material_id = #{materialId,jdbcType=VARCHAR},
+      </if>
+      <if test="materialDescribe != null">
+        material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="targetSum != null">
+        target_sum = #{targetSum,jdbcType=INTEGER},
+      </if>
+      <if test="finishedTotal != null">
+        finished_total = #{finishedTotal,jdbcType=INTEGER},
+      </if>
+      <if test="wasteTotal != null">
+        waste_total = #{wasteTotal,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="planStartDate != null">
+        plan_start_date = #{planStartDate,jdbcType=DATE},
+      </if>
+      <if test="planEndDate != null">
+        plan_end_date = #{planEndDate,jdbcType=DATE},
+      </if>
+      <if test="delRemark != null">
+        del_remark = #{delRemark,jdbcType=CHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.SapOrder">
+    update sap_order
+    set product_order_id = #{productOrderId,jdbcType=VARCHAR},
+      product_order_type = #{productOrderType,jdbcType=VARCHAR},
+      sale_order_id = #{saleOrderId,jdbcType=VARCHAR},
+      sale_order_row = #{saleOrderRow,jdbcType=VARCHAR},
+      user_simple_name = #{userSimpleName,jdbcType=VARCHAR},
+      manufacture_version = #{manufactureVersion,jdbcType=VARCHAR},
+      material_id = #{materialId,jdbcType=VARCHAR},
+      material_describe = #{materialDescribe,jdbcType=VARCHAR},
+      target_sum = #{targetSum,jdbcType=INTEGER},
+      finished_total = #{finishedTotal,jdbcType=INTEGER},
+      waste_total = #{wasteTotal,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR},
+      plan_start_date = #{planStartDate,jdbcType=DATE},
+      plan_end_date = #{planEndDate,jdbcType=DATE},
+      del_remark = #{delRemark,jdbcType=CHAR},
+      state = #{state,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
