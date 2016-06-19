@@ -1,5 +1,7 @@
 package com.eliteams.quick4j.web.service;
 
+import java.util.Date;
+
 import com.eliteams.quick4j.core.generic.GenericService;
 import com.eliteams.quick4j.web.model.SapOrder;
 
@@ -9,5 +11,6 @@ import com.eliteams.quick4j.web.model.SapOrder;
  *
  */
 public interface SapOrderService extends GenericService<SapOrder, Long> {
-	SapOrder gerProductOrderInfo();
+	void getSingleProductOrderInfo(String factory, Date alterDate, Date alterTime);
+	void getMoreProductOrderInfo(String factory, Date alterDate, Date alterTime);
 }
