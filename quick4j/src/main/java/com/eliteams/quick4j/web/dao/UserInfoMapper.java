@@ -1,11 +1,14 @@
 package com.eliteams.quick4j.web.dao;
 
-import com.eliteams.quick4j.web.model.UserInfo;
-import com.eliteams.quick4j.web.model.UserInfoExample;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-public interface UserInfoMapper {
+import com.eliteams.quick4j.core.generic.GenericDao;
+import com.eliteams.quick4j.web.model.UserInfo;
+import com.eliteams.quick4j.web.model.UserInfoExample;
+
+public interface UserInfoMapper extends GenericDao<UserInfo, Long> {
     int countByExample(UserInfoExample example);
 
     int deleteByExample(UserInfoExample example);

@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -16,7 +17,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.web.model.User;
+import com.eliteams.quick4j.web.model.UserInfo;
 import com.eliteams.quick4j.web.security.PermissionSign;
 import com.eliteams.quick4j.web.security.RoleSign;
 import com.eliteams.quick4j.web.service.UserService;
@@ -29,7 +34,7 @@ import com.eliteams.quick4j.web.service.UserService;
  **/
 @Controller
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController extends GenericController {
 
     @Resource
     private UserService userService;
@@ -103,12 +108,44 @@ public class UserController {
     
     /**
      * 用户列表查看
-     * 
-     * @param session
-     * @return
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list() {
         return "gernal/user/list";
+    }
+    
+    /**
+     * 用户添加
+     */
+    @RequestMapping(value = "/add")
+    public String add() {
+        return "gernal/user/addUser";
+    }
+    
+    /**
+     * 用户保存
+     */
+    @RequestMapping(value = "/save")
+    @ResponseBody
+    public Json save(User user, UserInfo userInfo, Model model, HttpServletRequest request) {
+    	/*String userName = request.getParameter("username");
+    	try {
+    		userService.insert(user);
+		} catch (Exception e) {
+			return ajaxDoneError(e.getMessage());
+		}
+
+		return ajaxDoneSuccess(getMessage("msg.operation.success"));*/
+    	/*ModelAndView mav = new ModelAndView("ajaxDone");
+		mav.addObject("statusCode", 200);
+		mav.addObject("message", "Success");
+		mav.addObject("forwardUrl", "rest/user/list");
+		return mav;*/
+    	Json json = new Json();
+    	json.setStatusCode("200");
+    	json.setMessage("success");
+    	json.setCallbackType("closeCurrent");
+    	json.setForwardUrl("user_list");
+    	return json;
     }
 }

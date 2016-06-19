@@ -3,6 +3,9 @@ package com.eliteams.quick4j.web.model;
 import java.util.Date;
 
 public class UserInfo {
+	
+	private User user;
+	
     private Long id;
 
     private Long userId;
@@ -19,7 +22,18 @@ public class UserInfo {
 
     private String address;
 
-    public Long getId() {
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) throws Exception{
+		if(this.userId!=user.getId()){
+			throw new Exception("userInfo中的userId与user中的id不同");
+		}
+		this.user = user;
+	}
+
+	public Long getId() {
         return id;
     }
 

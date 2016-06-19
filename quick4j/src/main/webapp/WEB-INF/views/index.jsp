@@ -132,28 +132,28 @@ $(function(){
 						<h2>精益生产 精益管理</h2>
 					</div>
 					<div class="accordionContent">
-						<ul class="tree treeFolder">
-							<li><a href="tabsPage.html" target="navTab">订单计划</a>
+						<ul class="tree treeFolder expand">
+							<li><span>订单计划</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">生产订单</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">进度上报</a></li>
 								</ul>
 							</li>
-							<li><a href="tabsPage.html" target="navTab">订单执行</a>
+							<li><span>订单执行</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">订单进度</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">订单报废</a></li>
 									<li><a href="main.html" target="navTab" rel="main">订单冲销</a></li>
 								</ul>
 							</li>
-							<li><a href="tabsPage.html" target="navTab">产量采集</a>
+							<li><span>产量采集</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">待分派量</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">产量修正</a></li>
 									<li><a href="main.html" target="navTab" rel="main">返修处理</a></li>
 								</ul>
 							</li>
-							<li><a href="tabsPage.html" target="navTab">分析决策</a>
+							<li><span>分析决策</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">订单执行分析</a></li>
 									<li><a href="main.html" target="navTab" rel="main">报废量统计表</a></li>
@@ -162,10 +162,10 @@ $(function(){
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">产品合格率分析</a></li>
 								</ul>
 							</li>
-							<li><a href="tabsPage.html" target="navTab">系统配置</a>
+							<li><span>系统配置</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">车间</a></li>
-									<li><a href="rest/user/list" target="navTab" >人员</a></li>
+									<li><a href="rest/user/list" target="navTab" rel="user_list">人员</a></li>
 									<li><a href="main.html" target="navTab" rel="main">角色</a></li>
 									<li><a href="main.html" target="navTab" rel="main">报修分类</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">返修分类</a></li>
@@ -200,7 +200,7 @@ $(function(){
 
 
 <a class="buttonActive" href="rest/sapOrder/testInsert" target="_blank"><span>数据获取</span></a>
-<a class="button" href="https://github.com/dwzteam/" target="_blank"><span>DWZ开源系列源码（github）</span></a>
+<a class="button" href="https://github.com/dwzteam/" target="_blank"><span>报工</span></a>
 
 <div class="divider"></div>
 
