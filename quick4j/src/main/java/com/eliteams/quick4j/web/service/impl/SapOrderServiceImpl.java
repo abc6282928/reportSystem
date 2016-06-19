@@ -12,6 +12,7 @@ import com.eliteams.quick4j.core.generic.GenericServiceImpl;
 import com.eliteams.quick4j.web.dao.SapOrderMapper;
 import com.eliteams.quick4j.web.model.SapOrder;
 import com.eliteams.quick4j.web.service.SapOrderService;
+import com.sap.conn.jco.AbapException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
@@ -96,7 +97,7 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			so.setUnit(AMEIN);
 			so.setWasteTotal(PSAMG);
 			so.setUserSimpleName(SORTL);
-			
+
 			sapOrderMapper.insertSelective(so);
 
 		} catch (JCoException e) {
@@ -127,6 +128,9 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 		try {
 			// 调用ZBC_TOSAP_0010函数
 			function = destination.getRepository().getFunction("ZBC_TOSAP_0010");
+			if (function == null) {
+				throw new RuntimeException("ZBC_TOSAP_0010 not found in SAP.");
+			}
 			// 获取传入表参数GT_OUTPUT
 			JCoTable GT_OUTPUT = function.getTableParameterList().getTable("GT_OUTPUT");
 			GT_OUTPUT.appendRow();// 增加一行
@@ -135,6 +139,54 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			GT_OUTPUT.setValue("AEDAT", alterDate);
 			GT_OUTPUT.setValue("AEZEIT", alterTime);
 			function.execute(destination);
+
+			/*try {
+				function.execute(destination);
+			} catch (AbapException e) {
+				System.out.println(e.toString());
+				return;
+			}
+			// 获取Table参数：GT_OUTPUT
+			JCoTable codes = function.getTableParameterList().getTable("GT_OUTPUT");
+			for (int i = 0; i < codes.getNumRows(); i++) {// 遍历Table
+				SapOrder so = new SapOrder();
+				codes.setRow(i);// 将行指针指向特定的索引行
+				AUFNR = codes.getString("AUFNR");
+				AUART = codes.getString("AUART");
+				KDAUF = codes.getString("KDAUF");
+				KDPOS = codes.getString("KDPOS");
+				SORTL = codes.getString("SORTL");
+				VERID = codes.getString("VERID");
+				MATNR = codes.getString("MATNR");
+				MAKTX = codes.getString("MAKTX");
+				PSMNG = codes.getInt("PSMNG");
+				WEMNG = codes.getInt("WEMNG");
+				PSAMG = codes.getInt("PSAMG");
+				AMEIN = codes.getString("AMEIN");
+				GSTRS = codes.getDate("GSTRS");// 参数类型
+				GLTRS = codes.getDate("GLTRS");// 参数类型
+				LOEKZ = codes.getString("LOEKZ");
+				STATUS = codes.getString("STATUS");
+
+				so.setDelRemark(LOEKZ);
+				so.setFinishedTotal(WEMNG);
+				so.setManufactureVersion(VERID);
+				so.setMaterialId(MATNR);
+				so.setMaterialDescribe(MAKTX);
+				so.setPlanEndDate(GLTRS);
+				so.setPlanStartDate(GSTRS);
+				so.setProductOrderId(AUFNR);
+				so.setProductOrderType(AUART);
+				so.setSaleOrderRow(KDPOS);
+				so.setSaleOrderId(KDAUF);
+				so.setState(STATUS);
+				so.setTargetSum(PSMNG);
+				so.setUnit(AMEIN);
+				so.setWasteTotal(PSAMG);
+				so.setUserSimpleName(SORTL);
+
+				sapOrderMapper.insertSelective(so);
+			}*/
 
 			GT_OUTPUT.firstRow();// 获取第一行的对象(此处看sap端如何写的，如果返回的可能有多行，那得循环)
 			// 获取各个值
