@@ -200,7 +200,7 @@ $(function(){
 
 
 <a class="buttonActive" href="rest/sapOrder/testInsert" target="_blank"><span>数据获取</span></a>
-<a class="button" href="https://github.com/dwzteam/" target="_blank"><span>报工</span></a>
+<a class="button" href="rest/sapOrder/testReport" target="_blank"><span>报工</span></a>
 
 <div class="divider"></div>
 

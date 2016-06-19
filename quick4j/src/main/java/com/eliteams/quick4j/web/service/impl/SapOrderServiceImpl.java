@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.feature.factory.SapConn;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
+import com.eliteams.quick4j.web.dao.ReportYieldMapper;
 import com.eliteams.quick4j.web.dao.SapOrderMapper;
+import com.eliteams.quick4j.web.model.ReportYield;
 import com.eliteams.quick4j.web.model.SapOrder;
 import com.eliteams.quick4j.web.service.SapOrderService;
 import com.sap.conn.jco.AbapException;
@@ -23,6 +25,9 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 
 	@Resource
 	private SapOrderMapper sapOrderMapper;
+	
+	@Resource
+	private ReportYieldMapper reportYieldMapper;
 
 	@Override
 	public GenericDao<SapOrder, Long> getDao() {
@@ -97,10 +102,11 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			so.setUnit(AMEIN);
 			so.setWasteTotal(PSAMG);
 			so.setUserSimpleName(SORTL);
+			
 
 			sapOrderMapper.insertSelective(so);
 
-		} catch (JCoException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -133,14 +139,18 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			}
 			// 获取传入表参数GT_OUTPUT
 			JCoTable GT_OUTPUT = function.getTableParameterList().getTable("GT_OUTPUT");
-			GT_OUTPUT.appendRow();// 增加一行
-			// 给表参数中的字段赋值
-			GT_OUTPUT.setValue("WERKS", factory);
-			GT_OUTPUT.setValue("AEDAT", alterDate);
-			GT_OUTPUT.setValue("AEZEIT", alterTime);
-			function.execute(destination);
+//			GT_OUTPUT.appendRow();// 增加一行
 
-			/*try {
+			try {
+				GT_OUTPUT.appendRow();
+				
+				//需要参数时，给表参数中的字段赋值
+				GT_OUTPUT.setValue("WERKS", factory);
+				GT_OUTPUT.setValue("AEDAT", alterDate);
+				GT_OUTPUT.setValue("AEZEIT", alterTime);
+				
+				
+				
 				function.execute(destination);
 			} catch (AbapException e) {
 				System.out.println(e.toString());
@@ -186,9 +196,9 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 				so.setUserSimpleName(SORTL);
 
 				sapOrderMapper.insertSelective(so);
-			}*/
+			}
 
-			GT_OUTPUT.firstRow();// 获取第一行的对象(此处看sap端如何写的，如果返回的可能有多行，那得循环)
+			/*GT_OUTPUT.firstRow();// 获取第一行的对象(此处看sap端如何写的，如果返回的可能有多行，那得循环)
 			// 获取各个值
 			AUFNR = GT_OUTPUT.getString("AUFNR");
 			AUART = GT_OUTPUT.getString("AUART");
@@ -208,9 +218,50 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			STATUS = GT_OUTPUT.getString("STATUS");
 
 			GT_OUTPUT.clear();// 清空本次条件，如果要继续传入值去或者还要循环，那得将之前的条件清空
-		} catch (Exception e) {
+*/		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public ReportYield reporCurrentYield(ReportYield ry) {
+		
+		JCoFunction function = null;
+		JCoDestination destination = SapConn.connect();
+		
+		try {
+			function = destination.getRepository().getFunction("ZBC_TOSAP_0020");
+			
+			function.getImportParameterList().setValue("XID", ry.getMessageId());
+			function.getImportParameterList().setValue("FLAG", ry.getOperation());
+			function.getImportParameterList().setValue("RUECK", ry.getOperationFinishNo());
+			function.getImportParameterList().setValue("RMZHL", ry.getConfirmCount());
+			function.getImportParameterList().setValue("AUFNR", ry.getProductOrderId());
+			function.getImportParameterList().setValue("LTXA1", ry.getProcessDescribe());
+			function.getImportParameterList().setValue("LMNGA", ry.getCurrentYield());
+			function.getImportParameterList().setValue("XMNGA", ry.getCurrentWaste());
+			function.getImportParameterList().setValue("XMNGA", ry.getManufactureDate());
+			function.getImportParameterList().setValue("PRDDATE", ry.getClasses());
+			function.getImportParameterList().setValue("BUDAT", ry.getAccountDate());
+			
+			
+			function.execute(destination);
+			
+			
+			ry.setMessageId(function.getExportParameterList().getString("XID"));
+			ry.setOperation(function.getExportParameterList().getString("RUECK"));
+			ry.setOperationFinishNo(function.getExportParameterList().getInt("RMZHL"));
+			ry.setMessageType(function.getExportParameterList().getString("TYPE"));
+			ry.setMessage(function.getExportParameterList().getString("MESSAGE"));
+			
+			reportYieldMapper.insertSelective(ry);
+			
+			
+		} catch (JCoException e) {
+			e.printStackTrace();
+		}
+		
+		return ry;
 	}
 
 }
