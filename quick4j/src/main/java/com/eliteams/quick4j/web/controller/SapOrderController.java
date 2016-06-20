@@ -23,8 +23,8 @@ public class SapOrderController {
 	@RequestMapping(value = "/testInsert")
 	public void testInsert(){
 		String factory = "1001";
-		Date alterDate = new Date();
-		Date alterTime = new Date();
+		Date alterDate = new Date(2016,3,4);
+		Date alterTime = new Date(2016,3,4,5,30,0);
 		sapOrderService.getSingleProductOrderInfo(factory,alterDate,alterTime);
 	}
 	

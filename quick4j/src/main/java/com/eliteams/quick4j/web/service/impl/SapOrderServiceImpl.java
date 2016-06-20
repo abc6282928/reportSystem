@@ -18,6 +18,8 @@ import com.sap.conn.jco.AbapException;
 import com.sap.conn.jco.JCoDestination;
 import com.sap.conn.jco.JCoException;
 import com.sap.conn.jco.JCoFunction;
+import com.sap.conn.jco.JCoParameterList;
+import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
 
 @Service
@@ -63,28 +65,38 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 		try {
 			// 调用ZBC_TOSAP_0010函数
 			function = destination.getRepository().getFunction("ZBC_TOSAP_0010");
+			
+			
+			
+//			JCoStructure structure = function.getImportParameterList().getStructure("GT_INPUT");
+			
+			
 			// 将当前传入的值赋予各个参数
 			function.getImportParameterList().setValue("WERKS", factory);
 			function.getImportParameterList().setValue("AEDAT", alterDate);
 			function.getImportParameterList().setValue("AEZEIT", alterTime);
 			function.execute(destination);
+			
+			JCoTable GT_OUTPUT = function.getTableParameterList().getTable("GT_OUTPUT");
 			// 获取各个值
-			AUFNR = function.getExportParameterList().getString("AUFNR");
-			AUART = function.getExportParameterList().getString("AUART");
-			KDAUF = function.getExportParameterList().getString("KDAUF");
-			KDPOS = function.getExportParameterList().getString("KDPOS");
-			SORTL = function.getExportParameterList().getString("SORTL");
-			VERID = function.getExportParameterList().getString("VERID");
-			MATNR = function.getExportParameterList().getString("MATNR");
-			MAKTX = function.getExportParameterList().getString("MAKTX");
-			PSMNG = function.getExportParameterList().getInt("PSMNG");
-			WEMNG = function.getExportParameterList().getInt("WEMNG");
-			PSAMG = function.getExportParameterList().getInt("PSAMG");
-			AMEIN = function.getExportParameterList().getString("AMEIN");
-			GSTRS = function.getExportParameterList().getDate("GSTRS");// 参数类型
-			GLTRS = function.getExportParameterList().getDate("GLTRS");// 参数类型
-			LOEKZ = function.getExportParameterList().getString("LOEKZ");
-			STATUS = function.getExportParameterList().getString("STATUS");
+			
+//			GT_OUTPUT.firstRow();
+			AUFNR = GT_OUTPUT.getString("AUFNR");
+			AUART = GT_OUTPUT.getString("AUART");
+			KDAUF = GT_OUTPUT.getString("KDAUF");
+			KDPOS = GT_OUTPUT.getString("KDPOS");
+			SORTL = GT_OUTPUT.getString("SORTL");
+			VERID = GT_OUTPUT.getString("VERID");
+			MATNR = GT_OUTPUT.getString("MATNR");
+			MAKTX = GT_OUTPUT.getString("MAKTX");
+			PSMNG = GT_OUTPUT.getInt("PSMNG");
+			WEMNG = GT_OUTPUT.getInt("WEMNG");
+			PSAMG = GT_OUTPUT.getInt("PSAMG");
+			AMEIN = GT_OUTPUT.getString("AMEIN");
+			GSTRS = GT_OUTPUT.getDate("GSTRS");// 参数类型
+			GLTRS = GT_OUTPUT.getDate("GLTRS");// 参数类型
+			LOEKZ = GT_OUTPUT.getString("LOEKZ");
+			STATUS = GT_OUTPUT.getString("STATUS");
 
 			so.setDelRemark(LOEKZ);
 			so.setFinishedTotal(WEMNG);
@@ -232,27 +244,34 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 		try {
 			function = destination.getRepository().getFunction("ZBC_TOSAP_0020");
 			
-			function.getImportParameterList().setValue("XID", ry.getMessageId());
-			function.getImportParameterList().setValue("FLAG", ry.getOperation());
-			function.getImportParameterList().setValue("RUECK", ry.getOperationFinishNo());
-			function.getImportParameterList().setValue("RMZHL", ry.getConfirmCount());
-			function.getImportParameterList().setValue("AUFNR", ry.getProductOrderId());
-			function.getImportParameterList().setValue("LTXA1", ry.getProcessDescribe());
-			function.getImportParameterList().setValue("LMNGA", ry.getCurrentYield());
-			function.getImportParameterList().setValue("XMNGA", ry.getCurrentWaste());
-			function.getImportParameterList().setValue("XMNGA", ry.getManufactureDate());
-			function.getImportParameterList().setValue("PRDDATE", ry.getClasses());
-			function.getImportParameterList().setValue("BUDAT", ry.getAccountDate());
+//			JCoParameterList importParam = function.getImportParameterList();
+			JCoStructure structure = function.getImportParameterList().getStructure("GT_INPUT");
+			
+			
+			JCoTable GT_OUTPUT = function.getTableParameterList().getTable("GT_OUTPUT");
+			
+//			
+			structure.setValue("XID", "012345678901234");
+			structure.setValue("FLAG", ry.getOperation());
+			structure.setValue("RUECK", ry.getOperationFinishNo());
+			structure.setValue("RMZHL", ry.getConfirmCount());
+			structure.setValue("AUFNR", ry.getProductOrderId());
+			structure.setValue("LTXA1", ry.getProcessDescribe());
+			structure.setValue("LMNGA", ry.getCurrentYield());
+			structure.setValue("XMNGA", ry.getCurrentWaste());
+//			structure.setValue("XMNGA", "2016-05-26");
+//			structure.setValue("PRDDATE", ry.getClasses());
+//			structure.setValue("BUDAT", ry.getAccountDate());
 			
 			
 			function.execute(destination);
 			
 			
-			ry.setMessageId(function.getExportParameterList().getString("XID"));
-			ry.setOperation(function.getExportParameterList().getString("RUECK"));
-			ry.setOperationFinishNo(function.getExportParameterList().getInt("RMZHL"));
-			ry.setMessageType(function.getExportParameterList().getString("TYPE"));
-			ry.setMessage(function.getExportParameterList().getString("MESSAGE"));
+			ry.setMessageId(GT_OUTPUT.getString("XID"));
+			ry.setOperation(GT_OUTPUT.getString("RUECK"));
+			ry.setOperationFinishNo(GT_OUTPUT.getInt("RMZHL"));
+			ry.setMessageType(GT_OUTPUT.getString("TYPE"));
+			ry.setMessage(GT_OUTPUT.getString("MESSAGE"));
 			
 			reportYieldMapper.insertSelective(ry);
 			
