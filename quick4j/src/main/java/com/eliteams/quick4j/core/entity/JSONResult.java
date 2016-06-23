@@ -31,19 +31,6 @@ public class JSONResult<T> extends Result {
     }
 
     /**
-     * 自定义返回的结果
-     *
-     * @param data
-     * @param message
-     * @param success
-     */
-    public JSONResult(T data, String message, boolean success) {
-        this.data = data;
-        super.setMessage(message);
-        super.setSuccess(success);
-    }
-
-    /**
      * 成功返回数据和消息
      *
      * @param data
@@ -52,7 +39,6 @@ public class JSONResult<T> extends Result {
     public JSONResult(T data, String message) {
         this.data = data;
         super.setMessage(message);
-        super.setSuccess(true);
     }
 
     /**
@@ -62,6 +48,5 @@ public class JSONResult<T> extends Result {
      */
     public JSONResult(T data) {
         this.data = data;
-        super.setSuccess(true);
     }
 }

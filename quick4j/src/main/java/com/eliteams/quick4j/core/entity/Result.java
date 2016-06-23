@@ -9,49 +9,76 @@ import java.io.Serializable;
  * @since 2014-09-27 16:28
  */
 public class Result implements Serializable {
-    private static final long serialVersionUID = 6288374846131788743L;
+	private static final long serialVersionUID = 6288374846131788743L;
 
-    /**
-     * 信息
-     */
-    private String message;
+	private String statusCode;
 
-    /**
-     * 状态码
-     */
-    private int statusCode;
+	private String message;
 
-    /**
-     * 是否成功
-     */
-    private boolean success;
+	private String confirmMsg;
 
+	private String navTabId;
 
-    public String getMessage() {
-        return message;
-    }
+	private String rel;
 
-    public void setMessage(String message) {
-        this.message = message;
-    }
+	private String callbackType;
 
-    public boolean isSuccess() {
-        return success;
-    }
+	private String forwardUrl;
 
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
+	public String getStatusCode() {
+		return statusCode;
+	}
 
-    public int getStatusCode() {
-        return statusCode;
-    }
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
+	}
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
-    }
+	public String getMessage() {
+		return message;
+	}
 
-    public Result() {
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
-    }
+	public String getConfirmMsg() {
+		return confirmMsg;
+	}
+
+	public void setConfirmMsg(String confirmMsg) {
+		this.confirmMsg = confirmMsg;
+	}
+
+	public String getNavTabId() {
+		return navTabId;
+	}
+
+	public void setNavTabId(String navTabId) {
+		this.navTabId = navTabId;
+	}
+
+	public String getRel() {
+		return rel;
+	}
+
+	public void setRel(String rel) {
+		this.rel = rel;
+	}
+
+	public String getCallbackType() {
+		return callbackType;
+	}
+
+	public void setCallbackType(String callbackType) {
+		this.callbackType = callbackType;
+	}
+
+	public String getForwardUrl() {
+		return forwardUrl;
+	}
+
+	public void setForwardUrl(String forwardUrl) {
+		this.forwardUrl = forwardUrl;
+	}
+
 }

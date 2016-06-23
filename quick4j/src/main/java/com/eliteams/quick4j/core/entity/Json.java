@@ -6,6 +6,8 @@ public class Json {
 	
 	private String message;
 	
+	private String confirmMsg;
+	
 	private String navTabId;
 	
 	private String rel;
@@ -28,6 +30,14 @@ public class Json {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getConfirmMsg() {
+		return confirmMsg;
+	}
+
+	public void setConfirmMsg(String confirmMsg) {
+		this.confirmMsg = confirmMsg;
 	}
 
 	public String getNavTabId() {

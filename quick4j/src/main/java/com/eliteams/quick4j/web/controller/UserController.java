@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eliteams.quick4j.core.entity.Json;
+import com.eliteams.quick4j.core.entity.Result;
 import com.eliteams.quick4j.core.generic.GenericController;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserInfo;
@@ -143,7 +143,7 @@ public class UserController extends GenericController {
      */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public Json save(User user, UserInfo userInfo, Model model, HttpServletRequest request) {
+    public Result save(User user, UserInfo userInfo, Model model, HttpServletRequest request) {
     	userInfoService.insertUserInfo(user,userInfo);
     	/*String userName = request.getParameter("username");
     	try {
@@ -158,11 +158,11 @@ public class UserController extends GenericController {
 		mav.addObject("message", "Success");
 		mav.addObject("forwardUrl", "rest/user/list");
 		return mav;*/
-    	Json json = new Json();
-    	json.setStatusCode("200");
-    	json.setMessage("success");
-    	json.setCallbackType("closeCurrent");
-    	json.setForwardUrl("user_list");
-    	return json;
+    	Result result = new Result();
+    	result.setStatusCode("200");
+    	result.setMessage("success");
+    	result.setCallbackType("closeCurrent");
+    	result.setRel("userLiNav");
+    	return result;
     }
 }
