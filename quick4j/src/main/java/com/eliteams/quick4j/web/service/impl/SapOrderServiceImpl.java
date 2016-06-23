@@ -1,6 +1,7 @@
 package com.eliteams.quick4j.web.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -23,7 +24,7 @@ import com.sap.conn.jco.JCoStructure;
 import com.sap.conn.jco.JCoTable;
 
 @Service
-public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> implements SapOrderService {
+public class SapOrderServiceImpl implements SapOrderService {
 
 	@Resource
 	private SapOrderMapper sapOrderMapper;
@@ -32,15 +33,9 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 	private ReportYieldMapper reportYieldMapper;
 
 	@Override
-	public GenericDao<SapOrder, Long> getDao() {
-		// TODO Auto-generated method stub
-		return sapOrderMapper;
-	}
-
-	@Override
 	public void getSingleProductOrderInfo(String factory, Date alterDate, Date alterTime) {
 
-		SapOrder so = new SapOrder();
+//		SapOrder so = new SapOrder();
 
 		String AUFNR = "";// 生产订单号
 		String AUART = "";// 订单类型
@@ -81,7 +76,7 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			// 获取各个值
 			
 //			GT_OUTPUT.firstRow();
-			AUFNR = GT_OUTPUT.getString("AUFNR");
+			/*AUFNR = GT_OUTPUT.getString("AUFNR");
 			AUART = GT_OUTPUT.getString("AUART");
 			KDAUF = GT_OUTPUT.getString("KDAUF");
 			KDPOS = GT_OUTPUT.getString("KDPOS");
@@ -116,7 +111,46 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			so.setUserSimpleName(SORTL);
 			
 
-			sapOrderMapper.insertSelective(so);
+			sapOrderMapper.insertSelective(so);*/
+			for (int i = 0; i < GT_OUTPUT.getNumRows(); i++) {// 遍历Table
+				SapOrder so = new SapOrder();
+				GT_OUTPUT.setRow(i);// 将行指针指向特定的索引行
+				AUFNR = GT_OUTPUT.getString("AUFNR");
+				AUART = GT_OUTPUT.getString("AUART");
+				KDAUF = GT_OUTPUT.getString("KDAUF");
+				KDPOS = GT_OUTPUT.getString("KDPOS");
+				SORTL = GT_OUTPUT.getString("SORTL");
+				VERID = GT_OUTPUT.getString("VERID");
+				MATNR = GT_OUTPUT.getString("MATNR");
+				MAKTX = GT_OUTPUT.getString("MAKTX");
+				PSMNG = GT_OUTPUT.getInt("PSMNG");
+				WEMNG = GT_OUTPUT.getInt("WEMNG");
+				PSAMG = GT_OUTPUT.getInt("PSAMG");
+				AMEIN = GT_OUTPUT.getString("AMEIN");
+				GSTRS = GT_OUTPUT.getDate("GSTRS");// 参数类型
+				GLTRS = GT_OUTPUT.getDate("GLTRS");// 参数类型
+				LOEKZ = GT_OUTPUT.getString("LOEKZ");
+				STATUS = GT_OUTPUT.getString("STATUS");
+
+				so.setDelRemark(LOEKZ);
+				so.setFinishedTotal(WEMNG);
+				so.setManufactureVersion(VERID);
+				so.setMaterialId(MATNR);
+				so.setMaterialDescribe(MAKTX);
+				so.setPlanEndDate(GLTRS);
+				so.setPlanStartDate(GSTRS);
+				so.setProductOrderId(AUFNR);
+				so.setProductOrderType(AUART);
+				so.setSaleOrderRow(KDPOS);
+				so.setSaleOrderId(KDAUF);
+				so.setState(STATUS);
+				so.setTargetSum(PSMNG);
+				so.setUnit(AMEIN);
+				so.setWasteTotal(PSAMG);
+				so.setUserSimpleName(SORTL);
+
+				sapOrderMapper.insert(so);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -207,7 +241,7 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 				so.setWasteTotal(PSAMG);
 				so.setUserSimpleName(SORTL);
 
-				sapOrderMapper.insertSelective(so);
+				sapOrderMapper.insert(so);
 			}
 
 			/*GT_OUTPUT.firstRow();// 获取第一行的对象(此处看sap端如何写的，如果返回的可能有多行，那得循环)
@@ -251,7 +285,7 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			JCoTable GT_OUTPUT = function.getTableParameterList().getTable("GT_OUTPUT");
 			
 //			
-			structure.setValue("XID", "012345678901234");
+			structure.setValue("XID", ry.getMessageId());
 			structure.setValue("FLAG", ry.getOperation());
 			structure.setValue("RUECK", ry.getOperationFinishNo());
 			structure.setValue("RMZHL", ry.getConfirmCount());
@@ -259,21 +293,21 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 			structure.setValue("LTXA1", ry.getProcessDescribe());
 			structure.setValue("LMNGA", ry.getCurrentYield());
 			structure.setValue("XMNGA", ry.getCurrentWaste());
-//			structure.setValue("XMNGA", "2016-05-26");
-//			structure.setValue("PRDDATE", ry.getClasses());
-//			structure.setValue("BUDAT", ry.getAccountDate());
+			structure.setValue("PRDDATE", ry.getManufactureDate());
+			structure.setValue("GRUNR", ry.getClasses());
+			structure.setValue("BUDAT", ry.getAccountDate());
 			
 			
 			function.execute(destination);
 			
 			
 			ry.setMessageId(GT_OUTPUT.getString("XID"));
-			ry.setOperation(GT_OUTPUT.getString("RUECK"));
-			ry.setOperationFinishNo(GT_OUTPUT.getInt("RMZHL"));
+			ry.setOperationFinishNo(GT_OUTPUT.getInt("RUECK"));
+			ry.setConfirmCount(GT_OUTPUT.getInt("RMZHL"));
 			ry.setMessageType(GT_OUTPUT.getString("TYPE"));
 			ry.setMessage(GT_OUTPUT.getString("MESSAGE"));
 			
-			reportYieldMapper.insertSelective(ry);
+			reportYieldMapper.insert(ry);
 			
 			
 		} catch (JCoException e) {
@@ -282,5 +316,7 @@ public class SapOrderServiceImpl extends GenericServiceImpl<SapOrder, Long> impl
 		
 		return ry;
 	}
+
+	
 
 }

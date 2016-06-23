@@ -498,7 +498,7 @@ body { overflow:hidden;}
 .pageFormContent p { float:left; display:block; width:380px; height:21px; margin:0; padding:5px 0; position:relative;}
 .pageFormContent p.nowrap { height:auto; width: 100%}
 .pageFormContent .radioGroup { float:left; display:block; overflow:hidden;}
-.pageFormContent label { float:left; width:120px; padding:0 5px; line-height:21px;}
+.pageFormContent label { float:left; width:70px; padding:0 5px; line-height:21px;}
 .pageFormContent label.radioButton { float:left; width:auto; padding:0 10px 0 0; line-height:21px;}
 .pageFormContent .textInput { float:left;}
 .pageFormContent select { float:left;}

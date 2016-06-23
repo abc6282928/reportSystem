@@ -12,7 +12,7 @@
     <!--数据库驱动包路径 -->
     <classPathEntry location="${drive.class.path}"/>
 
-    <context id="DB2Tables" targetRuntime="MyBatis3">
+    <context id="DB2Tables" targetRuntime="MyBatis3Simple">
         <!--关闭注释 -->
         <commentGenerator>
             <property name="suppressAllComments" value="true"/>
@@ -40,7 +40,7 @@
         </javaClientGenerator>
 
         <!--对应数据库表名 -->
-        <table tableName="report_yield">
+        <table tableName="user_info">
 
         </table>
     </context>

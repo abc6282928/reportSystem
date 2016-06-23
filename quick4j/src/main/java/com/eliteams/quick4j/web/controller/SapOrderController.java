@@ -23,8 +23,8 @@ public class SapOrderController {
 	@RequestMapping(value = "/testInsert")
 	public void testInsert(){
 		String factory = "1001";
-		Date alterDate = new Date(2016,3,4);
-		Date alterTime = new Date(2016,3,4,5,30,0);
+		Date alterDate = new Date(2016-1900,3,4);
+		Date alterTime = new Date(2016-1900,3,4,5,30,0);
 		sapOrderService.getSingleProductOrderInfo(factory,alterDate,alterTime);
 	}
 	
@@ -32,12 +32,14 @@ public class SapOrderController {
 	@RequestMapping(value = "/testReport")
 	public void testReport(){
 		ReportYield ry = new ReportYield();
-		ry.setMessageId("xx");
+		ry.setMessageId("300000013");
 		ry.setOperation("A");
-		ry.setProductOrderId("dd0001");
-		ry.setProcessDescribe("合成");
-		ry.setManufactureDate(new Date());
-		ry.setClasses("0021");
+		ry.setProductOrderId("000010043494");
+		ry.setProcessDescribe("旋压");
+		ry.setCurrentYield(150);
+		ry.setCurrentWaste(20);
+		ry.setManufactureDate(new Date(2016-1900,3,4));
+		ry.setClasses("早班");
 		sapOrderService.reporCurrentYield(ry);
 	}
 }

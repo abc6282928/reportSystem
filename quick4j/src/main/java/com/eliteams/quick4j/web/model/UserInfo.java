@@ -3,12 +3,11 @@ package com.eliteams.quick4j.web.model;
 import java.util.Date;
 
 public class UserInfo {
-	
-	private User user;
-	
     private Long id;
-
+    
     private Long userId;
+
+    private User user;
 
     private String workNo;
 
@@ -22,18 +21,7 @@ public class UserInfo {
 
     private String address;
 
-    public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) throws Exception{
-		if(this.userId!=user.getId()){
-			throw new Exception("userInfo中的userId与user中的id不同");
-		}
-		this.user = user;
-	}
-
-	public Long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -42,14 +30,22 @@ public class UserInfo {
     }
 
     public Long getUserId() {
-        return userId;
-    }
+		return userId;
+	}
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public String getWorkNo() {
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getWorkNo() {
         return workNo;
     }
 
@@ -95,5 +91,11 @@ public class UserInfo {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+    
+    @Override
+    public String toString() {
+        return "UserInfo [id=" + id + ", userId=" + userId + ", user=" + user + ", workNo=" + workNo + ", sex=" + sex +
+        		"birthday=" + birthday + ", phone=" + phone + ", email=" + email + ", address=" + address +"]";
     }
 }

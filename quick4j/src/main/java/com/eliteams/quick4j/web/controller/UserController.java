@@ -1,5 +1,7 @@
 package com.eliteams.quick4j.web.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -14,16 +16,18 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.eliteams.quick4j.core.entity.Json;
+import com.eliteams.quick4j.core.generic.GenericController;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserInfo;
 import com.eliteams.quick4j.web.security.PermissionSign;
 import com.eliteams.quick4j.web.security.RoleSign;
+import com.eliteams.quick4j.web.service.UserInfoService;
 import com.eliteams.quick4j.web.service.UserService;
 
 /**
@@ -38,6 +42,9 @@ public class UserController extends GenericController {
 
     @Resource
     private UserService userService;
+    
+    @Resource
+    private UserInfoService userInfoService;
 
     /**
      * 用户登录
@@ -110,7 +117,9 @@ public class UserController extends GenericController {
      * 用户列表查看
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list() {
+    public String list(Model model) {
+    	List<UserInfo> userInfoList = userInfoService.getAllUserInfo();
+    	model.addAttribute(userInfoList);
         return "gernal/user/list";
     }
     
@@ -119,15 +128,23 @@ public class UserController extends GenericController {
      */
     @RequestMapping(value = "/add")
     public String add() {
-        return "gernal/user/addUser";
+        return "gernal/user/add";
     }
     
+    @RequestMapping("/edit/{userId}")
+	public String edit(@PathVariable("userId") int userId, Model model) {
+		UserInfo userInfo = userInfoService.getUserInfoByUserId(userId);
+		model.addAttribute(userInfo);
+		return "gernal/user/edit";
+	}
+    
     /**
-     * 用户保存
+     * 用户新增
      */
-    @RequestMapping(value = "/save")
+    @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
     public Json save(User user, UserInfo userInfo, Model model, HttpServletRequest request) {
+    	userInfoService.insertUserInfo(user,userInfo);
     	/*String userName = request.getParameter("username");
     	try {
     		userService.insert(user);

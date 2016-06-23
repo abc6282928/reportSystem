@@ -1,33 +1,18 @@
 package com.eliteams.quick4j.web.dao;
 
+import com.eliteams.quick4j.web.model.UserInfo;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import com.eliteams.quick4j.core.generic.GenericDao;
-import com.eliteams.quick4j.web.model.UserInfo;
-import com.eliteams.quick4j.web.model.UserInfoExample;
-
-public interface UserInfoMapper extends GenericDao<UserInfo, Long> {
-    int countByExample(UserInfoExample example);
-
-    int deleteByExample(UserInfoExample example);
-
+public interface UserInfoMapper {
     int deleteByPrimaryKey(Long id);
 
     int insert(UserInfo record);
 
-    int insertSelective(UserInfo record);
+    UserInfo selectByUserId(Long id);
 
-    List<UserInfo> selectByExample(UserInfoExample example);
-
-    UserInfo selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByExample(@Param("record") UserInfo record, @Param("example") UserInfoExample example);
-
-    int updateByPrimaryKeySelective(UserInfo record);
+    List<UserInfo> selectAll();
 
     int updateByPrimaryKey(UserInfo record);
+    
+    List<UserInfo> selectAllUserInfo();
 }

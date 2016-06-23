@@ -1,5 +1,6 @@
 package com.eliteams.quick4j.web.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -21,7 +22,7 @@ import com.eliteams.quick4j.web.service.UserInfoService;
  * @since 2014年7月5日 上午11:54:24
  */
 @Service
-public class UserInfoServiceImpl extends GenericServiceImpl<UserInfo, Long> implements UserInfoService {
+public class UserInfoServiceImpl implements UserInfoService {
 
     @Resource
     private UserInfoMapper userInfoMapper;
@@ -30,17 +31,29 @@ public class UserInfoServiceImpl extends GenericServiceImpl<UserInfo, Long> impl
     private UserMapper userMapper;
 
 	@Override
-	public List<UserInfo> getUserInfoList(UserInfo userInfo) {
-		User user = userInfo.getUser();
-		
-		return null;
+	public List<UserInfo> getAllUserInfo() {
+		List<UserInfo> userList = new ArrayList<UserInfo>();
+		userList= userInfoMapper.selectAllUserInfo();
+		return userList;
 	}
 
 	@Override
-	public GenericDao<UserInfo, Long> getDao() {
-		return userInfoMapper;
+	public long insertUserInfo(User user,UserInfo userInfo) {
+		userMapper.insert(user);
+		long userId = user.getId();
+		userInfo.setUserId(userId);
+		userInfoMapper.insert(userInfo);
+		return userId;
 	}
 
-    
+	@Override
+	public UserInfo getUserInfoByUserId(long userId) {
+		User user = userMapper.selectByPrimaryKey(userId);
+		UserInfo userInfo = userInfoMapper.selectByUserId(userId);
+		userInfo.setUser(user);
+		return userInfo;
+	}
+
+	  
 
 }

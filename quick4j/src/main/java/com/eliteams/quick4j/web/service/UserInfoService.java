@@ -2,19 +2,26 @@ package com.eliteams.quick4j.web.service;
 
 import java.util.List;
 
-import com.eliteams.quick4j.core.generic.GenericService;
+import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserInfo;
 
 /**
- * 用户 业务 接口
+ * 用户详情 业务 接口
  * 
- * @author StarZou
- * @since 2014年7月5日 上午11:53:33
+ * @author zhangsh
  **/
-public interface UserInfoService extends GenericService<UserInfo, Long> {
+public interface UserInfoService {
 
-	/**
+	/*
 	 * 用户信息列表展示
 	 */
-    List<UserInfo> getUserInfoList(UserInfo userInfo);
+    List<UserInfo> getAllUserInfo();
+    /*
+     * 新建用户
+     */
+    long insertUserInfo(User user,UserInfo userInfo);
+    /*
+     * 
+     */
+    UserInfo getUserInfoByUserId(long userId);
 }

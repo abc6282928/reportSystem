@@ -11,7 +11,7 @@ import com.eliteams.quick4j.web.model.SapOrder;
  * @author zhang
  *
  */
-public interface SapOrderService extends GenericService<SapOrder, Long> {
+public interface SapOrderService{
 	void getSingleProductOrderInfo(String factory, Date alterDate, Date alterTime);
 	void getMoreProductOrderInfo(String factory, Date alterDate, Date alterTime);
 	

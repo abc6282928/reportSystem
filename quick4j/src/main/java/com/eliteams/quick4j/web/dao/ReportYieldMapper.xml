@@ -18,98 +18,9 @@
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <sql id="Example_Where_Clause" >
-    <where >
-      <foreach collection="oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause" >
-    <where >
-      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
-        <if test="criteria.valid" >
-          <trim prefix="(" suffix=")" prefixOverrides="and" >
-            <foreach collection="criteria.criteria" item="criterion" >
-              <choose >
-                <when test="criterion.noValue" >
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue" >
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue" >
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue" >
-                  and ${criterion.condition}
-                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Base_Column_List" >
-    id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
-    process_describe, current_yield, current_waste, manufacture_date, classes, account_date, 
-    message_type, message, create_time
-  </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.eliteams.quick4j.web.model.ReportYieldExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from report_yield
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from report_yield
-    where id = #{id,jdbcType=BIGINT}
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from report_yield
     where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <delete id="deleteByExample" parameterType="com.eliteams.quick4j.web.model.ReportYieldExample" >
-    delete from report_yield
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
   </delete>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
     insert into report_yield (id, message_id, operation, 
@@ -125,231 +36,6 @@
       #{messageType,jdbcType=CHAR}, #{message,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
-    insert into report_yield
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="messageId != null" >
-        message_id,
-      </if>
-      <if test="operation != null" >
-        operation,
-      </if>
-      <if test="operationFinishNo != null" >
-        operation_finish_no,
-      </if>
-      <if test="confirmCount != null" >
-        confirm_count,
-      </if>
-      <if test="productOrderId != null" >
-        product_order_id,
-      </if>
-      <if test="processDescribe != null" >
-        process_describe,
-      </if>
-      <if test="currentYield != null" >
-        current_yield,
-      </if>
-      <if test="currentWaste != null" >
-        current_waste,
-      </if>
-      <if test="manufactureDate != null" >
-        manufacture_date,
-      </if>
-      <if test="classes != null" >
-        classes,
-      </if>
-      <if test="accountDate != null" >
-        account_date,
-      </if>
-      <if test="messageType != null" >
-        message_type,
-      </if>
-      <if test="message != null" >
-        message,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="messageId != null" >
-        #{messageId,jdbcType=VARCHAR},
-      </if>
-      <if test="operation != null" >
-        #{operation,jdbcType=CHAR},
-      </if>
-      <if test="operationFinishNo != null" >
-        #{operationFinishNo,jdbcType=INTEGER},
-      </if>
-      <if test="confirmCount != null" >
-        #{confirmCount,jdbcType=INTEGER},
-      </if>
-      <if test="productOrderId != null" >
-        #{productOrderId,jdbcType=VARCHAR},
-      </if>
-      <if test="processDescribe != null" >
-        #{processDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="currentYield != null" >
-        #{currentYield,jdbcType=INTEGER},
-      </if>
-      <if test="currentWaste != null" >
-        #{currentWaste,jdbcType=INTEGER},
-      </if>
-      <if test="manufactureDate != null" >
-        #{manufactureDate,jdbcType=DATE},
-      </if>
-      <if test="classes != null" >
-        #{classes,jdbcType=VARCHAR},
-      </if>
-      <if test="accountDate != null" >
-        #{accountDate,jdbcType=DATE},
-      </if>
-      <if test="messageType != null" >
-        #{messageType,jdbcType=CHAR},
-      </if>
-      <if test="message != null" >
-        #{message,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.ReportYieldExample" resultType="java.lang.Integer" >
-    select count(*) from report_yield
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-  </select>
-  <update id="updateByExampleSelective" parameterType="map" >
-    update report_yield
-    <set >
-      <if test="record.id != null" >
-        id = #{record.id,jdbcType=BIGINT},
-      </if>
-      <if test="record.messageId != null" >
-        message_id = #{record.messageId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.operation != null" >
-        operation = #{record.operation,jdbcType=CHAR},
-      </if>
-      <if test="record.operationFinishNo != null" >
-        operation_finish_no = #{record.operationFinishNo,jdbcType=INTEGER},
-      </if>
-      <if test="record.confirmCount != null" >
-        confirm_count = #{record.confirmCount,jdbcType=INTEGER},
-      </if>
-      <if test="record.productOrderId != null" >
-        product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.processDescribe != null" >
-        process_describe = #{record.processDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="record.currentYield != null" >
-        current_yield = #{record.currentYield,jdbcType=INTEGER},
-      </if>
-      <if test="record.currentWaste != null" >
-        current_waste = #{record.currentWaste,jdbcType=INTEGER},
-      </if>
-      <if test="record.manufactureDate != null" >
-        manufacture_date = #{record.manufactureDate,jdbcType=DATE},
-      </if>
-      <if test="record.classes != null" >
-        classes = #{record.classes,jdbcType=VARCHAR},
-      </if>
-      <if test="record.accountDate != null" >
-        account_date = #{record.accountDate,jdbcType=DATE},
-      </if>
-      <if test="record.messageType != null" >
-        message_type = #{record.messageType,jdbcType=CHAR},
-      </if>
-      <if test="record.message != null" >
-        message = #{record.message,jdbcType=VARCHAR},
-      </if>
-      <if test="record.createTime != null" >
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map" >
-    update report_yield
-    set id = #{record.id,jdbcType=BIGINT},
-      message_id = #{record.messageId,jdbcType=VARCHAR},
-      operation = #{record.operation,jdbcType=CHAR},
-      operation_finish_no = #{record.operationFinishNo,jdbcType=INTEGER},
-      confirm_count = #{record.confirmCount,jdbcType=INTEGER},
-      product_order_id = #{record.productOrderId,jdbcType=VARCHAR},
-      process_describe = #{record.processDescribe,jdbcType=VARCHAR},
-      current_yield = #{record.currentYield,jdbcType=INTEGER},
-      current_waste = #{record.currentWaste,jdbcType=INTEGER},
-      manufacture_date = #{record.manufactureDate,jdbcType=DATE},
-      classes = #{record.classes,jdbcType=VARCHAR},
-      account_date = #{record.accountDate,jdbcType=DATE},
-      message_type = #{record.messageType,jdbcType=CHAR},
-      message = #{record.message,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
-    update report_yield
-    <set >
-      <if test="messageId != null" >
-        message_id = #{messageId,jdbcType=VARCHAR},
-      </if>
-      <if test="operation != null" >
-        operation = #{operation,jdbcType=CHAR},
-      </if>
-      <if test="operationFinishNo != null" >
-        operation_finish_no = #{operationFinishNo,jdbcType=INTEGER},
-      </if>
-      <if test="confirmCount != null" >
-        confirm_count = #{confirmCount,jdbcType=INTEGER},
-      </if>
-      <if test="productOrderId != null" >
-        product_order_id = #{productOrderId,jdbcType=VARCHAR},
-      </if>
-      <if test="processDescribe != null" >
-        process_describe = #{processDescribe,jdbcType=VARCHAR},
-      </if>
-      <if test="currentYield != null" >
-        current_yield = #{currentYield,jdbcType=INTEGER},
-      </if>
-      <if test="currentWaste != null" >
-        current_waste = #{currentWaste,jdbcType=INTEGER},
-      </if>
-      <if test="manufactureDate != null" >
-        manufacture_date = #{manufactureDate,jdbcType=DATE},
-      </if>
-      <if test="classes != null" >
-        classes = #{classes,jdbcType=VARCHAR},
-      </if>
-      <if test="accountDate != null" >
-        account_date = #{accountDate,jdbcType=DATE},
-      </if>
-      <if test="messageType != null" >
-        message_type = #{messageType,jdbcType=CHAR},
-      </if>
-      <if test="message != null" >
-        message = #{message,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
   <update id="updateByPrimaryKey" parameterType="com.eliteams.quick4j.web.model.ReportYield" >
     update report_yield
     set message_id = #{messageId,jdbcType=VARCHAR},
@@ -368,4 +54,17 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    process_describe, current_yield, current_waste, manufacture_date, classes, account_date, 
+    message_type, message, create_time
+    from report_yield
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, message_id, operation, operation_finish_no, confirm_count, product_order_id, 
+    process_describe, current_yield, current_waste, manufacture_date, classes, account_date, 
+    message_type, message, create_time
+    from report_yield
+  </select>
 </mapper>

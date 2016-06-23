@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <form id="pagerForm" method="post" action="#rel#">
 	<input type="hidden" name="pageNum" value="1" />
 	<input type="hidden" name="numPerPage" value="${model.numPerPage}" />
@@ -58,6 +59,7 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			<li><a class="add" href="rest/user/add" target="navTab"><span>添加</span></a></li>
+			<li><a class="edit" target="navTab" rel="userNav" href="<c:url value='rest/user/edit/{slt_objId}'/>" title="编辑用户"><span>编辑</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" href="demo/common/ajaxDone.html" class="delete"><span>批量删除默认方式</span></a></li>
 			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="demo/common/ajaxDone.html" class="delete"><span>批量删除逗号分隔</span></a></li>
 			<li><a class="edit" href="demo_page4.html?uid={sid_user}" target="navTab" warn="请选择一个用户"><span>修改</span></a></li>
@@ -65,21 +67,34 @@
 			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>
 	</div>
-	<table class="table" width="1200" layoutH="138">
+	<table class="table" layoutH="138">
 		<thead>
 			<tr>
-				<th width="80"></th>
-				<th width="120">客户号</th>
-				<th>客户名称</th>
-				<th width="100">客户类型</th>
-				<th width="150">证件号码</th>
-				<th width="80" align="center">信用等级</th>
-				<th width="80">所属行业</th>
-				<th width="80">建档日期</th>
+				<th width="22"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="25"></th>
+				<th width="80">用户名</th>
+				<th width="120">工号</th>
+				<th width="80">性别</th>
+				<th width="100">生日</th>
+				<th width="120">手机号</th>
+				<th width="180">邮箱</th>
+				<th width="350">地址</th>
 			</tr>
 		</thead>
 		<tbody>
-			
+			<c:forEach var="item" items="${userInfoList}" varStatus="s">
+			<tr target="slt_objId" rel="${item.userId}">
+				<td><input name="ids" value="${item.userId}" type="checkbox"></td>
+				<td>${s.index + 1}</td>
+				<td>${item.user.username}</td>
+				<td>${item.workNo}</td>
+				<td>${item.sex}</td>
+				<td><fmt:formatDate value="${item.birthday}" pattern="yyyy-MM-dd"/></td>
+				<td>${item.phone}</td>
+				<td>${item.email}</td>
+				<td>${item.address}</td>
+			</tr>
+		</c:forEach>
 		</tbody>
 	</table>
 	<div class="panelBar">
