@@ -98,8 +98,9 @@ $(function(){
 <body>
 	<div id="layout">
 		<div id="header">
-			<div class="headerNav">
-				<a class="logo" href="http://j-ui.com">标志</a>
+			<div class="headerNav" >
+				<!-- <a class="logo" href="http://j-ui.com">标志</a> -->
+				<div class="title">浙江金固股份有限公司精益生产系统</div>
 				<ul class="nav">
 					<li><a href="changepwd.html" target="dialog" width="600">密码修改</a></li>
 					<li><a href="login.html">退出</a></li>
@@ -165,7 +166,7 @@ $(function(){
 							<li><span>系统配置</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">车间</a></li>
-									<li><a href="rest/user/list" target="navTab" rel="user_list">人员</a></li>
+									<li><a href="rest/user/list" target="navTab" rel="userLiNav">人员</a></li>
 									<li><a href="main.html" target="navTab" rel="main">角色</a></li>
 									<li><a href="main.html" target="navTab" rel="main">报修分类</a></li>
 									<li><a href="http://www.baidu.com" target="navTab" rel="page1">返修分类</a></li>
@@ -199,8 +200,8 @@ $(function(){
 						<div class="pageFormContent" layoutH="80">
 
 
-<a class="buttonActive" href="rest/sapOrder/testInsert" target="_blank"><span>数据获取</span></a>
-<a class="button" href="rest/sapOrder/testReport" target="_blank"><span>报工</span></a>
+<a class="buttonActive" href="rest/sapOrder/testInsert" target="_blank"><span>点击数据获取</span></a>
+<a class="button" href="rest/sapOrder/testReport" target="_blank"><span>点击生产报工</span></a>
 
 <div class="divider"></div>
 
