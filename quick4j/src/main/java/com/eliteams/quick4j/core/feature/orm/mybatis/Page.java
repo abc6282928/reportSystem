@@ -21,7 +21,7 @@ public class Page<T> extends RowBounds {
     /**
      * 页大小 : 每页的数量
      */
-    protected int pageSize = 15;
+    protected int pageSize = 20;
 
     /**
      * 偏移量 : 第一条数据在表中的位置
@@ -77,7 +77,19 @@ public class Page<T> extends RowBounds {
         this.calcLimit();
     }
 
-    // -- 访问查询参数函数 --//
+    public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+		this.calcOffset();
+        this.calcLimit();
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+		this.calcOffset();
+		this.calcLimit();
+	}
+
+	// -- 访问查询参数函数 --//
     /**
      * 获得当前页的页号,序号从1开始,默认为1.
      */

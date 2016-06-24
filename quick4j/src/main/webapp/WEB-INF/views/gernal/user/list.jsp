@@ -1,11 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<form id="pagerForm" method="post" action="#rel#">
-	<input type="hidden" name="pageNum" value="1" />
-	<input type="hidden" name="numPerPage" value="${model.numPerPage}" />
-	<input type="hidden" name="orderField" value="${param.orderField}" />
-	<input type="hidden" name="orderDirection" value="${param.orderDirection}" />
+<form id="pagerForm" method="post" action="rest/user/list">
+	<input type="hidden" name="pageNo" value="1" />
+	<input type="hidden" name="pageSize" value="${page.pageSize}" />
+	<%-- <input type="hidden" name="orderField" value="${param.orderField}" />
+	<input type="hidden" name="orderDirection" value="${param.orderDirection}" /> --%>
 </form>
 
 <div class="pageHeader">
@@ -82,7 +82,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="item" items="${userInfoList}" varStatus="s">
+			<c:forEach var="item" items="${page.result}" varStatus="s">
 			<tr target="slt_objId" rel="${item.userId}">
 				<td><input name="ids" value="${item.userId}" type="checkbox"></td>
 				<td>${s.index + 1}</td>
@@ -97,19 +97,19 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<div class="panelBar">
+	<%-- <div class="panelBar">
 		<div class="pages">
 			<span>显示</span>
-			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
-				<option value="20">20</option>
-				<option value="50">50</option>
-				<option value="100">100</option>
-				<option value="200">200</option>
+			<select class="combox" name="pageSize" onchange="navTabPageBreak({numPerPage:this.value})">
+				<c:forEach begin="20" end="80" step="20" varStatus="s">
+				<option value="${s.index}" ${page.pageSize eq s.index ? 'selected="selected"' : ''}>${s.index}</option>
+			</c:forEach>
 			</select>
-			<span>条，共${totalCount}条</span>
+			<span>条，共${page.totalCount}条</span>
 		</div>
 		
-		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
+		<div class="pagination" targetType="navTab" totalCount="${page.totalCount}" numPerPage="${page.pageSize}" pageNumShown="10" currentPage="${page.pageNo}"></div>
 
-	</div>
+	</div> --%>
+	<c:import url="../../panelBar.jsp"></c:import>
 </div>

@@ -7,8 +7,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.eliteams.quick4j.core.generic.GenericDao;
-import com.eliteams.quick4j.core.generic.GenericServiceImpl;
+import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.web.dao.UserInfoMapper;
 import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.User;
@@ -52,6 +51,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 		UserInfo userInfo = userInfoMapper.selectByUserId(userId);
 		userInfo.setUser(user);
 		return userInfo;
+	}
+
+	@Override
+	public List<UserInfo> getUserInfoByPage(Page page) {
+		return userInfoMapper.getUserInfoByPage(page);
 	}
 
 	  
