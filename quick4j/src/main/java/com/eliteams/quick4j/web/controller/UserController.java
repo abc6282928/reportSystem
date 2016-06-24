@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.eliteams.quick4j.core.entity.Result;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
@@ -170,4 +171,15 @@ public class UserController extends GenericController {
     	result.setRel("userLiNav");
     	return result;
     }
+    
+    /**
+     * 用户删除
+     */
+    @RequestMapping("/delete/{userId}")
+	public ModelAndView delete(@PathVariable("userId") int userId) {
+
+//		userMgr.delUser(userId);
+//
+		return null;
+	}
 }
