@@ -55,7 +55,6 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 	@Override
 	public List<UserInfo> getUserInfoByPage(Page page) {
-		// TODO Auto-generated method stub
 		return userInfoMapper.getUserInfoByPage(page);
 	}
 
