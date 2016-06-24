@@ -143,7 +143,7 @@ $(function(){
 							<li><span>订单执行</span>
 								<ul>
 									<li><a href="main.html" target="navTab" rel="main">订单进度</a></li>
-									<li><a href="http://www.baidu.com" target="navTab" rel="page1">订单报废</a></li>
+									<li><a href="rest/scrap/list" target="navTab" rel="scrapNav">订单报废</a></li>
 									<li><a href="main.html" target="navTab" rel="main">订单冲销</a></li>
 								</ul>
 							</li>
