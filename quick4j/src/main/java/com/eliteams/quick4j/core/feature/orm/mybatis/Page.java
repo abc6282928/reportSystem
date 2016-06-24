@@ -77,7 +77,15 @@ public class Page<T> extends RowBounds {
         this.calcLimit();
     }
 
-    // -- 访问查询参数函数 --//
+    public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
+
+	public void setPageSize(int pageSize) {
+		this.pageSize = pageSize;
+	}
+
+	// -- 访问查询参数函数 --//
     /**
      * 获得当前页的页号,序号从1开始,默认为1.
      */

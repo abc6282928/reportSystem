@@ -2,6 +2,7 @@ package com.eliteams.quick4j.web.service;
 
 import java.util.List;
 
+import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserInfo;
 
@@ -21,7 +22,11 @@ public interface UserInfoService {
      */
     long insertUserInfo(User user,UserInfo userInfo);
     /*
-     * 
+     * 通过userId获取用户信息
      */
     UserInfo getUserInfoByUserId(long userId);
+    /*
+     * Page用户信息
+     */
+    List<UserInfo> getUserInfoByPage(Page page);
 }

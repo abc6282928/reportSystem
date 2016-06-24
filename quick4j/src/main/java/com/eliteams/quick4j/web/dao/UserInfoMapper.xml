@@ -59,4 +59,7 @@
   <select id="selectAllUserInfo" resultMap="UserMap" >
     SELECT * FROM `user`,user_info WHERE user_info.user_id=user.id
   </select>
+  <select id="getUserInfoByPage" resultMap="UserMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
+    SELECT * FROM `user`,user_info WHERE user_info.user_id=user.id
+  </select>
 </mapper>

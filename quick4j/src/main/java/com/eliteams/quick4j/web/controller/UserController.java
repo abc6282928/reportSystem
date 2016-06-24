@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.eliteams.quick4j.core.entity.Result;
+import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.generic.GenericController;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserInfo;
@@ -116,10 +117,13 @@ public class UserController extends GenericController {
     /**
      * 用户列表查看
      */
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(Model model) {
-    	List<UserInfo> userInfoList = userInfoService.getAllUserInfo();
-    	model.addAttribute(userInfoList);
+    @RequestMapping(value = "/list")
+    public String list(Model model,Page<UserInfo> page,HttpServletRequest request) {
+//    	Page<UserInfo> page = new Page<UserInfo>();
+//    	String pageSize = request.getParameter("pageSize");
+    	userInfoService.getUserInfoByPage(page);
+//    	List<UserInfo> userInfoList = userInfoService.getAllUserInfo();
+    	model.addAttribute(page);
         return "gernal/user/list";
     }
     
@@ -161,6 +165,7 @@ public class UserController extends GenericController {
     	Result result = new Result();
     	result.setStatusCode("200");
     	result.setMessage("success");
+    	result.setNavTabId("userLiNav");
     	result.setCallbackType("closeCurrent");
     	result.setRel("userLiNav");
     	return result;
