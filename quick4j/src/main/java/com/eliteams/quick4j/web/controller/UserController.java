@@ -171,11 +171,14 @@ public class UserController extends GenericController {
      * 用户删除
      */
     @RequestMapping("/delete/{userId}")
+    @ResponseBody
 	public Json delete(@PathVariable("userId") long userId ,Json json) {
 
-    	json.setRel("userLiNav");
-    	json.setCallbackType("forwardConfirm");
-    	userInfoService.deleteUserInfo(userId);
+    	try {
+			userInfoService.deleteUserInfo(userId);
+		} catch (Exception e) {
+			return json.ajaxDoneError();
+		}
 		return json.ajaxDoneSuccess();
 	}
 }
