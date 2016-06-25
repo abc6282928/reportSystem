@@ -1,7 +1,5 @@
 package com.eliteams.quick4j.web.controller;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.eliteams.quick4j.core.entity.Result;
+import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.core.feature.orm.mybatis.Page;
 import com.eliteams.quick4j.core.generic.GenericController;
 import com.eliteams.quick4j.web.model.User;
@@ -120,10 +118,11 @@ public class UserController extends GenericController {
      */
     @RequestMapping(value = "/list")
     public String list(Model model,Page<UserInfo> page,HttpServletRequest request) {
-//    	Page<UserInfo> page = new Page<UserInfo>();
-//    	String pageSize = request.getParameter("pageSize");
-    	userInfoService.getUserInfoByPage(page);
-//    	List<UserInfo> userInfoList = userInfoService.getAllUserInfo();
+    	try {
+			userInfoService.getUserInfoByPage(page);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
     	model.addAttribute(page);
         return "gernal/user/list";
     }
@@ -135,51 +134,48 @@ public class UserController extends GenericController {
     public String add() {
         return "gernal/user/add";
     }
-    
+    /**
+     * 用户编辑
+     * @param userId
+     * @param model
+     * @return
+     */
     @RequestMapping("/edit/{userId}")
-	public String edit(@PathVariable("userId") int userId, Model model) {
+	public String edit(@PathVariable("userId") long userId, Model model) {
 		UserInfo userInfo = userInfoService.getUserInfoByUserId(userId);
 		model.addAttribute(userInfo);
 		return "gernal/user/edit";
 	}
     
     /**
-     * 用户新增
+     * 用户新增保存
+     * @param user
+     * @param userInfo
+     * @param json
+     * @return
      */
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert")
     @ResponseBody
-    public Result save(User user, UserInfo userInfo, Model model, HttpServletRequest request) {
-    	userInfoService.insertUserInfo(user,userInfo);
-    	/*String userName = request.getParameter("username");
+    public Json save(User user, UserInfo userInfo, Json json) {
     	try {
-    		userService.insert(user);
+			userInfoService.insertUserInfo(user,userInfo);
 		} catch (Exception e) {
-			return ajaxDoneError(e.getMessage());
+			e.printStackTrace();
+			return json.ajaxDoneError();
 		}
-
-		return ajaxDoneSuccess(getMessage("msg.operation.success"));*/
-    	/*ModelAndView mav = new ModelAndView("ajaxDone");
-		mav.addObject("statusCode", 200);
-		mav.addObject("message", "Success");
-		mav.addObject("forwardUrl", "rest/user/list");
-		return mav;*/
-    	Result result = new Result();
-    	result.setStatusCode("200");
-    	result.setMessage("success");
-    	result.setNavTabId("userLiNav");
-    	result.setCallbackType("closeCurrent");
-    	result.setRel("userLiNav");
-    	return result;
+    	
+    	return json.ajaxDoneSuccess();
     }
     
     /**
      * 用户删除
      */
     @RequestMapping("/delete/{userId}")
-	public ModelAndView delete(@PathVariable("userId") int userId) {
+	public Json delete(@PathVariable("userId") long userId ,Json json) {
 
-//		userMgr.delUser(userId);
-//
-		return null;
+    	json.setRel("userLiNav");
+    	json.setCallbackType("forwardConfirm");
+    	userInfoService.deleteUserInfo(userId);
+		return json.ajaxDoneSuccess();
 	}
 }

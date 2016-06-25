@@ -24,9 +24,9 @@
     <association property="user" javaType="com.eliteams.quick4j.web.model.User" resultMap="com.eliteams.quick4j.web.dao.UserMapper.BaseResultMap" />
   </resultMap>
   
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <delete id="deleteByUserId" parameterType="java.lang.Long" >
     delete from user_info
-    where id = #{id,jdbcType=BIGINT}
+    where user_id = #{userId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.eliteams.quick4j.web.model.UserInfo" >
     insert into user_info (id, user_id, work_no, 
@@ -60,6 +60,6 @@
     SELECT * FROM `user`,user_info WHERE user_info.user_id=user.id
   </select>
   <select id="getUserInfoByPage" resultMap="UserMap" parameterType="com.eliteams.quick4j.core.feature.orm.mybatis.Page" >
-    SELECT * FROM `user`,user_info WHERE user_info.user_id=user.id
+    SELECT * FROM `user`,user_info WHERE user_info.user_id=user.id ORDER BY `user`.id DESC
   </select>
 </mapper>

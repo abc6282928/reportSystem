@@ -58,6 +58,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 		return userInfoMapper.getUserInfoByPage(page);
 	}
 
+	@Override
+	public long deleteUserInfo(long userId) {
+		userInfoMapper.deleteByUserId(userId);
+		userMapper.deleteByPrimaryKey(userId);//user表的主键就是userId
+		return userId;
+	}
+
 	  
 
 }

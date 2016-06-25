@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.eliteams.quick4j.core.entity.Result;
+import com.eliteams.quick4j.core.entity.Json;
 import com.eliteams.quick4j.core.generic.GenericController;
 import com.eliteams.quick4j.web.model.Scrap;
 import com.eliteams.quick4j.web.service.ScrapService;
@@ -49,9 +49,9 @@ public class ScrapController extends GenericController {
 	
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public Result save(Scrap scrap, Model model, HttpServletRequest request) {
+    public Json save(Scrap scrap, Model model, HttpServletRequest request) {
 		scrapService.insertScrap(scrap);
-    	Result result = new Result();
+    	Json result = new Json();
     	result.setStatusCode("200");
     	result.setMessage("success");
     	result.setCallbackType("closeCurrent");

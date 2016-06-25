@@ -5,8 +5,6 @@ import com.eliteams.quick4j.web.model.UserInfo;
 import java.util.List;
 
 public interface UserInfoMapper {
-    int deleteByPrimaryKey(Long id);
-
     int insert(UserInfo record);
 
     UserInfo selectByUserId(Long id);
@@ -21,4 +19,6 @@ public interface UserInfoMapper {
      * Page用户信息
      */
     List<UserInfo> getUserInfoByPage(Page page);
+    
+    int deleteByUserId(Long userId);
 }

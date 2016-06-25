@@ -8,7 +8,7 @@ package com.eliteams.quick4j.core.entity;
  * @since 2014年5月26日 上午10:51:46
  */
 
-public class JSONResult<T> extends Result {
+public class JSONResult<T> extends Json {
 
     private static final long serialVersionUID = 7880907731807860636L;
 

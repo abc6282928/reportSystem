@@ -9,7 +9,7 @@ import java.util.Map;
  * @author StarZou
  * @since 2014-09-27 16:38
  */
-public class ErrorResult extends Result {
+public class ErrorResult extends Json {
     private static final long serialVersionUID = 8567221653356186674L;
 
     /**

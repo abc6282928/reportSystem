@@ -4,8 +4,6 @@
 <form id="pagerForm" method="post" action="rest/user/list">
 	<input type="hidden" name="pageNo" value="1" />
 	<input type="hidden" name="pageSize" value="${page.pageSize}" />
-	<%-- <input type="hidden" name="orderField" value="${param.orderField}" />
-	<input type="hidden" name="orderDirection" value="${param.orderDirection}" /> --%>
 </form>
 
 <div class="pageHeader">
@@ -60,6 +58,7 @@
 		<ul class="toolBar">
 			<li><a class="add" href="rest/user/add" target="navTab"><span>添加</span></a></li>
 			<li><a class="edit" target="navTab" rel="userNav" warn="请选择一个用户" href="<c:url value='rest/user/edit/{slt_objId}'/>" title="编辑用户"><span>编辑</span></a></li>
+			<li><a class="delete" target="ajaxTodo" href="rest/user/delete/{slt_objId}" title="你确定要删除吗?"><span>删除</span></a></li>
 			<li class="line">line</li>
 			<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>
 		</ul>

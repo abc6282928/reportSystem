@@ -29,4 +29,10 @@ public interface UserInfoService {
      * Page用户信息
      */
     List<UserInfo> getUserInfoByPage(Page page);
+    /**
+     * 通过userId删除user_info和user表
+     * @param userId
+     * @return
+     */
+    long deleteUserInfo(long userId);
 }

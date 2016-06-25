@@ -38,7 +38,7 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script type="text/javascript" src="chart/g.pie.js"></script>
 <script type="text/javascript" src="chart/g.dot.js"></script>
 
-<!-- <script src="js/dwz.core.js" type="text/javascript"></script>
+<script src="js/dwz.core.js" type="text/javascript"></script>
 <script src="js/dwz.util.date.js" type="text/javascript"></script>
 <script src="js/dwz.validate.method.js" type="text/javascript"></script>
 <script src="js/dwz.barDrag.js" type="text/javascript"></script>
@@ -68,10 +68,10 @@ String basePath = request.getScheme() + "://" + request.getServerName() + ":" + 
 <script src="js/dwz.checkbox.js" type="text/javascript"></script>
 <script src="js/dwz.history.js" type="text/javascript"></script>
 <script src="js/dwz.combox.js" type="text/javascript"></script>
-<script src="js/dwz.print.js" type="text/javascript"></script> -->
+<script src="js/dwz.print.js" type="text/javascript"></script>
 
 <!-- 可以用dwz.min.js替换前面全部dwz.*.js (注意：替换时下面dwz.regional.zh.js还需要引入)-->
-<script src="js/dwz.min.js" type="text/javascript"></script>
+<!-- <script src="js/dwz.min.js" type="text/javascript"></script> -->
 
 <script src="js/dwz.regional.zh.js" type="text/javascript"></script>
 
